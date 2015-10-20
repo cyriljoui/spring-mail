@@ -3,6 +3,7 @@ package com.cyriljoui.spring.poc.mail.controller;
 import com.cyriljoui.spring.poc.mail.model.User;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.mail.internet.MimeMessage;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +28,9 @@ public class SignUpController {
 
     @Autowired
     private MessageSource messageSource;
+
+    @Value("${mail.from}")
+    private String emailFrom;
 
     @RequestMapping("/signup")
     public String signUp(Locale locale, Model model) {
@@ -46,14 +49,12 @@ public class SignUpController {
     }
 
     private void sendEmail(User user) {
-        String from = "poc-springmail@clip2.pro";
-        String to = "cyril.joui@gmail.com";
         Locale locale = user.getLocale();
         String subject = messageSource.getMessage("mail.registration.subject", new Object[] {user.getFirstname()}, locale);
         MimeMessagePreparator preparator = mimeMessage -> {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-            message.setTo(to);
-            message.setFrom(from);
+            message.setTo(user.getEmail());
+            message.setFrom(emailFrom);
             message.setSubject(subject);
             Map<String, Object> model = new HashMap<>();
             model.put("user", user);
