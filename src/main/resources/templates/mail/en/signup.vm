@@ -1,0 +1,8 @@
+<html>
+	<body>
+		<h3>Hi ${user.firstname}, you are registered!</h3>
+		<p>
+			Your email is ${user.email} and your language is ${user.locale}
+		</p>
+	</body>
+</html>

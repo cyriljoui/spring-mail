@@ -1,0 +1,9 @@
+<html>
+	<body>
+		<h3>Bonjour ${user.firstname}, vous êtes bien enregistré</h3>
+		<p>
+			Votre email de connexion est : ${user.email}.
+			Votre langue par défault est : ${user.locale}.
+		</p>
+	</body>
+</html>
