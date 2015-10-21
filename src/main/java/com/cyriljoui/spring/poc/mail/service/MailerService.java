@@ -72,7 +72,7 @@ public class MailerService {
 
 
     private String getI18nVelocityMailTemplate(String mailFileTemplate, Locale locale) {
-        String language = locale.getLanguage();
+        String language = locale.getLanguage().substring(0, 2);
         String templateFolder = "/templates/mail/";
         String templateFile = templateFolder + language + "/" + mailFileTemplate;
 
